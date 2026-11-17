@@ -6,6 +6,10 @@ O mesmo `zshrc` roda em **macOS**, **Linux** e **Windows (via WSL2)**. As difere
 
 Inclui uma ferramenta de atalhos que se documentam sozinhos: `zhelp` lista o que existe, `znew` cria.
 
+![Prompt com o tema Dracula](docs/prompt-dracula.png)
+
+> Prompt Spaceship com o tema Dracula e a fonte MesloLGS Nerd Font. O passo a passo está em [Aparência: tema Dracula](#aparência-tema-dracula).
+
 ---
 
 ## Instalação
@@ -138,6 +142,43 @@ O primeiro é criado a partir do `zshrc.local.example` com `chmod 600`:
 ```bash
 $EDITOR ~/.zshrc.local
 ```
+
+---
+
+## Aparência: tema Dracula
+
+As cores do print lá em cima são o [Dracula](https://draculatheme.com/). Ele é configuração do **app de terminal**, não do zsh — por isso não entra no `install.sh` nem neste repositório. São três passos, e a ordem importa.
+
+### 1. Importar o tema
+
+No macOS, com o Terminal.app:
+
+```bash
+curl -fsSL -o ~/Downloads/Dracula.terminal https://raw.githubusercontent.com/dracula/terminal-app/master/Dracula.terminal
+open ~/Downloads/Dracula.terminal
+```
+
+O segundo comando importa o perfil e já abre uma janela com ele. Em seguida, **Terminal → Settings → Profiles**, selecione **Dracula** e clique em **Default** no rodapé da lista — sem isso, cada janela nova volta ao perfil anterior.
+
+Para iTerm2, Windows Terminal, GNOME Terminal, VS Code e outros, os arquivos estão em [draculatheme.com](https://draculatheme.com/).
+
+### 2. Corrigir a fonte
+
+**Este passo é obrigatório e vem depois do primeiro.** O perfil do Dracula embute a **SF Mono**, que não tem os ícones do prompt — ao importar, ele sobrescreve a Nerd Font que o `install.sh` instalou, e o Spaceship passa a mostrar quadradinhos.
+
+Volte em **Profiles → Dracula → aba Text → Change…** e escolha **MesloLGS Nerd Font Mono**, tamanho 15 ou 16. No Terminal.app prefira a variante **Mono**, que respeita a largura fixa de caractere.
+
+Se a fonte não aparecer na lista, desmarque **Fixed width fonts only** no painel de fontes.
+
+### 3. Tamanho da janela
+
+O perfil do Dracula não define tamanho. Em **Profiles → Dracula → aba Window → Window Size**, 120 colunas × 35 linhas é um bom ponto de partida; num monitor externo, 160 × 45.
+
+Abra uma janela nova (`⌘N`) para ver o resultado — as já abertas mantêm o perfil antigo.
+
+### E o `bat`
+
+Nada a fazer: o `cat` deste repositório usa o `bat`, e o `zshrc` já define `BAT_THEME="Dracula"`, então o highlight combina com o terminal. Para outro tema, defina `BAT_THEME` no `~/.zshrc.local` — `bat --list-themes` mostra as opções.
 
 ---
 
@@ -307,6 +348,7 @@ aliases.zsh            atalhos versionados, declarados com `ali`
 lib/alias-tool.zsh     implementação de zhelp, znew, zrm e zedit
 zshrc.local.example    modelo do ~/.zshrc.local
 install.sh             instalador, idempotente, dos três sistemas
+docs/                  imagens do README
 ```
 
 Fora do repositório, na sua máquina:
