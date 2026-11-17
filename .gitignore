@@ -1,0 +1,23 @@
+# NUNCA commitar configuração local/secreta
+.zshrc.local
+zshrc.local
+*.local
+
+# Segredos em geral
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Histórico de shell
+.zsh_history
+.zcompdump*
+
+# Lixo de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*~

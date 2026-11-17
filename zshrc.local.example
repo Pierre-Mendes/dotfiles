@@ -1,0 +1,83 @@
+# ============================================================
+#  ~/.zshrc.local — configuração pessoal desta máquina
+#
+#  Copie para ~/.zshrc.local e preencha com os seus valores.
+#  Não é versionado.
+#
+#      cp zshrc.local.example ~/.zshrc.local
+#      chmod 600 ~/.zshrc.local
+#
+#  Para atalhos, prefira o comando `znew` — ele grava em
+#  ~/.zsh_aliases.local já com descrição, e aí eles aparecem
+#  no `zhelp`.
+# ============================================================
+
+# ------------------------------------------------------------
+# Tokens e chaves de API
+# ------------------------------------------------------------
+# Em vez de colar o token aqui, o ideal é ler de um gerenciador
+# de segredos. Exemplos:
+#
+#   macOS Keychain:
+#     security add-generic-password -a "$USER" -s GITHUB_PAT -w   # grava
+#     export CR_PAT="$(security find-generic-password -a "$USER" -s GITHUB_PAT -w)"
+#
+#   1Password CLI:
+#     export CR_PAT="$(op read 'op://Private/GitHub PAT/credential')"
+#
+#   pass (Linux):
+#     export CR_PAT="$(pass show github/pat)"
+#
+# Se for colar direto mesmo, deixe o arquivo com chmod 600.
+
+# export CR_PAT=""
+# export ANTHROPIC_BASE_URL=""
+# export ANTHROPIC_API_KEY=""
+
+# ------------------------------------------------------------
+# Go
+# ------------------------------------------------------------
+# Módulos privados: evita que o proxy/sumdb público seja consultado
+# export GOPRIVATE="github.com/sua-org/*"
+
+# Para o `go get` autenticar em repo privado via HTTPS usando o CR_PAT:
+# git config --global url."https://${CR_PAT}@github.com/".insteadOf "https://github.com/"
+# (ou, melhor, use SSH: url."git@github.com:".insteadOf "https://github.com/")
+
+# ------------------------------------------------------------
+# Ajustes de prompt
+# ------------------------------------------------------------
+# Desliga a seção de docker compose no prompt (ganha uns 100-300ms
+# por prompt dentro de projetos com compose file)
+# SPACESHIP_DOCKER_COMPOSE_SHOW=false
+
+# ------------------------------------------------------------
+# Editor
+# ------------------------------------------------------------
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
+
+# ------------------------------------------------------------
+# Funções e variáveis de projeto
+# ------------------------------------------------------------
+# Coisas muito específicas suas — hosts, túneis SSH, bancos de
+# desenvolvimento — ficam aqui, não no repositório.
+#
+# Exemplo, um cliente de banco apontando para o container local:
+#
+#   paydb() {
+#     mycli -h 127.0.0.1 -P 3306 -u root -p "$@"
+#   }
+#   doc paydb -g projeto -d 'Conecta no MySQL do docker-compose'
+#
+# A linha `doc` é opcional e serve para a função aparecer no `zhelp`.
+#
+# Exemplo, um túnel SSH para um servidor seu:
+#
+#   meutunel() {
+#     ssh -L 9090:localhost:9090 usuario@meu.host
+#   }
+#   doc meutunel -g rede -d 'Túnel SSH para o painel do servidor'
