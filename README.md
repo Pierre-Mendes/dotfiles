@@ -6,9 +6,9 @@ O mesmo `zshrc` roda em **macOS**, **Linux** e **Windows (via WSL2)**. As difere
 
 Inclui uma ferramenta de atalhos que se documentam sozinhos: `zhelp` lista o que existe, `znew` cria.
 
-![Prompt com o tema Dracula](docs/prompt-dracula.png)
+![zhelp listando os atalhos, com o tema Dracula](docs/prompt-dracula.png)
 
-> Prompt Spaceship com o tema Dracula e a fonte MesloLGS Nerd Font. O passo a passo está em [Aparência: tema Dracula](#aparência-tema-dracula).
+> O `zhelp` listando os atalhos por grupo, com o prompt Spaceship, o tema Dracula e a fonte MesloLGS Nerd Font. O passo a passo das cores está em [Aparência: tema Dracula](#aparência-tema-dracula).
 
 ---
 
