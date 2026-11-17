@@ -34,11 +34,51 @@ say "Sistema detectado: $OS"
 install_macos_deps() {
   if ! command -v brew >/dev/null 2>&1; then
     say "Homebrew não encontrado. Instalando..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Baixa para arquivo em vez de rodar /bin/bash -c "$(curl ...)".
+    # Com a forma antiga, um curl que falha devolve string vazia e o
+    # `bash -c ""` sai com 0: o script seguia achando que tinha instalado,
+    # e o erro só aparecia bem depois, como "algum pacote falhou".
+    local installer rc=0
+    installer="$(mktemp)" || {
+      warn "Não consegui criar arquivo temporário para o instalador."
+      return 0
+    }
+
+    if ! curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -o "$installer"; then
+      rm -f "$installer"
+      warn "Não foi possível baixar o instalador do Homebrew (rede, proxy ou firewall)."
+      warn "Instale manualmente por https://brew.sh e rode ./install.sh de novo."
+      return 0
+    fi
+
+    # Download truncado, ou página de erro de proxy, não é o instalador.
+    if [[ ! -s "$installer" ]] || ! head -n 1 "$installer" | grep -q '^#!'; then
+      rm -f "$installer"
+      warn "O instalador do Homebrew veio vazio ou corrompido."
+      warn "Instale manualmente por https://brew.sh e rode ./install.sh de novo."
+      return 0
+    fi
+
+    /bin/bash "$installer" || rc=$?
+    rm -f "$installer"
+
+    if (( rc != 0 )); then
+      warn "O instalador do Homebrew terminou com erro (código $rc)."
+      warn "Sem direitos de admin? Veja https://docs.brew.sh/Installation para instalar no seu home."
+      return 0
+    fi
+
     if [[ -x /opt/homebrew/bin/brew ]]; then
       eval "$(/opt/homebrew/bin/brew shellenv)"
     elif [[ -x /usr/local/bin/brew ]]; then
       eval "$(/usr/local/bin/brew shellenv)"
+    fi
+
+    if ! command -v brew >/dev/null 2>&1; then
+      warn "Homebrew foi instalado mas não entrou no PATH desta sessão."
+      warn "Abra um terminal novo e rode ./install.sh de novo."
+      return 0
     fi
   fi
 
