@@ -230,7 +230,7 @@ Rode `zhelp` para a lista completa e sempre atualizada — o que segue é só o 
 - **go** — `gob`, `gor`, `got`, `gotv`, `gomt`, `gol`, `gocov`, `gocov-min`
 - **shell** — `zhelp`, `znew`, `zrm`, `zedit`, `zreload`
 
-Fora da lista, `cat` é substituído por `bat`/`batcat` com highlight — e volta para o `cat` real quando a saída vai para um pipe, para não quebrar script.
+Fora da lista, `cat` é substituído por `bat`/`batcat` com highlight — e volta para o `cat` real quando a saída vai para um pipe, para não quebrar script. O tema é o **Dracula**; para trocar, defina `BAT_THEME` no `~/.zshrc.local` (`bat --list-themes` mostra as opções).
 
 ### Cobertura de Go
 

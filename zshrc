@@ -219,6 +219,12 @@ elif command -v bat >/dev/null 2>&1; then
 fi
 
 if [[ -n "$BAT_CMD" ]]; then
+  # Tema do bat, combinando com o Dracula do terminal. Para usar outro,
+  # defina BAT_THEME no ~/.zshrc.local. Nome de tema desconhecido não
+  # quebra nada: o bat avisa no stderr e cai no tema padrão.
+  # Veja os disponíveis com: $BAT_CMD --list-themes
+  export BAT_THEME="${BAT_THEME:-Dracula}"
+
   cat() {
     # Em pipe ou redirecionamento, usa o cat real para não quebrar scripts
     if [[ ! -t 1 ]]; then
